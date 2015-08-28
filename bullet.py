@@ -6,7 +6,7 @@ from prompt_toolkit.shortcuts import get_input
 
 from api import PushBullet, Device, AllDevice
 from completer import CommandCompleter
-from exceptions import UnknownCommand, UnknownDevice
+import exceptions
 
 __author__ = 'sami'
 
@@ -29,7 +29,7 @@ def parse(txt, device_list, command_list):
             txt = txt[len(c)+1:]
             break
     if command is None:
-        raise UnknownCommand()
+        raise exceptions.UnknownCommand()
 
     device = None
     for d in device_list:
@@ -38,7 +38,7 @@ def parse(txt, device_list, command_list):
             txt = txt[len(d.name)+1:]
             break
     if device is None:
-        raise UnknownDevice()
+        raise exceptions.UnknownDevice()
 
     return command, device, txt
 
@@ -77,9 +77,9 @@ def main(args):
             try:
                 command, device, msg = parse(txt, pb.devices, pb.valid_commands)
                 pb.push(command, device, msg)
-            except UnknownCommand:
+            except exceptions.UnknownCommand:
                 print('Unknown command, try \'help\' for a list of valid ones')
-            except UnknownDevice:
+            except exceptions.UnknownDevice:
                 print('Device name not recognized')
 
     if args:
