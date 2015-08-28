@@ -5,7 +5,7 @@ import unittest
 from api import PushBullet
 
 
-class PushTestCase(unittest.TestCase):
+class PushBulletTestCase(unittest.TestCase):
 
     def setUp(self):
         self.pb = PushBullet()

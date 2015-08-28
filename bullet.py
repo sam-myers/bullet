@@ -82,17 +82,16 @@ def main(args):
             except UnknownDevice:
                 print('Device name not recognized')
 
-    if len(args) > 1:
-        loop(' '.join(args[1:]))
-        exit(0)
-
-    try:
-        while True:
-            text = get_input('> ', completer=command_completer)
-            loop(text)
-    except KeyboardInterrupt:
-        return
+    if args:
+        loop(' '.join(args))
+    else:
+        try:
+            while True:
+                text = get_input('> ', completer=command_completer)
+                loop(text)
+        except KeyboardInterrupt:
+            return
 
 
 if __name__ == '__main__':
-    main(argv)
+    main(argv[1:])
