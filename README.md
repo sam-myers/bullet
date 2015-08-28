@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Demotivated/bullet.svg?branch=master)](https://travis-ci.org/Demotivated/bullet)
+
 ## Setup
 
 ```

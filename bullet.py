@@ -43,8 +43,23 @@ def parse(txt, device_list, command_list):
     return command, device, txt
 
 
+def prompt_for_api_key(pushbullet):
+    print('Your PushBullet access token must be configured first.\n'
+          'I can attempt to set it for you, please visit https://www.pushbullet.com/#settings/account\n'
+          'and paste it below')
+    key = get_input('ACCESS TOKEN> ')
+    pushbullet.api_key = key
+    if pushbullet.api_key == key:
+        print('Access token configured')
+    else:
+        print('Unable to set your environment variable automatically.\n'
+              'Please manually set the variable "PUSHBULLET_API_KEY" to the access token')
+
+
 def main(args):
     pb = PushBullet()
+    if pb.api_key is None:
+        prompt_for_api_key(pb)
     command_completer = CommandCompleter(pb)
 
     def loop(txt):
