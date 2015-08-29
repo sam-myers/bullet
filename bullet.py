@@ -58,7 +58,10 @@ def prompt_for_api_key(pushbullet):
 
 def main(args):
     pb = PushBullet()
-    if pb.api_key is None:
+
+    try:
+        pb.retrieve_devices()
+    except exceptions.InvalidApiKey:
         prompt_for_api_key(pb)
     command_completer = CommandCompleter(pb)
 

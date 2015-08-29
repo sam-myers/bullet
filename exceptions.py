@@ -7,3 +7,7 @@ class UnknownCommand(Exception):
 
 class UnknownDevice(Exception):
     pass
+
+
+class InvalidApiKey(Exception):
+    pass

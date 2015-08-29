@@ -6,7 +6,7 @@
 pip install prompt-toolkit, requests
 ```
 
-The first time it's run Bullet will prompt you for your [access token](https://www.pushbullet.com/#settings/account). 
+The first time it's run, Bullet will prompt you for your [access token](https://www.pushbullet.com/#settings/account). 
 
 ## Examples
 

@@ -1,8 +1,11 @@
 from __future__ import print_function, unicode_literals
 import os
+import shelve
 from json import dumps
 
 import requests
+
+from exceptions import InvalidApiKey
 
 __author__ = 'sami'
 
@@ -11,16 +14,30 @@ class PushBullet(object):
 
     def __init__(self):
         self._devices = []
-        self.retrieve_devices()
+        # self.retrieve_devices()
         self.valid_commands = ['note', 'link']
 
     @property
     def api_key(self):
-        return os.environ.get('PUSHBULLET_API_KEY')
+        key = os.environ.get('PUSHBULLET_API_KEY')
+        if key is None:
+            try:
+                s = shelve.open('access_token')
+                key = s['api_key']
+            except KeyError:
+                key = None
+            finally:
+                s.close()
+        return key
 
     @api_key.setter
     def api_key(self, value):
         os.putenv('PUSHBULLET_API_KEY', value)
+        key = os.environ.get('PUSHBULLET_API_KEY')
+        if value != key:
+            s = shelve.open('access_token')
+            s['api_key'] = value
+            s.close()
 
     @property
     def user(self):
@@ -85,6 +102,8 @@ class PushBullet(object):
             headers={
                 'Access-Token': self.api_key
             })
+        if request.status_code == 401:
+            raise InvalidApiKey()
         json = request.json()
         for device in json['devices']:
             if device['active']:
