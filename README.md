@@ -20,4 +20,4 @@ Commands can also be invoked directly
 bullet.py note computer name message
 ```
 
-_Note that device names can have spaces in them, you don't have to worry about quoting them out_
+_Note that device names can and should be typed with spaces, quotes are not necessary_

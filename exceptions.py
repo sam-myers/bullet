@@ -1,13 +1,13 @@
 __author__ = 'sami'
 
 
-class UnknownCommand(Exception):
+class UnknownCommandError(Exception):
     pass
 
 
-class UnknownDevice(Exception):
+class UnknownDeviceError(Exception):
     pass
 
 
-class InvalidApiKey(Exception):
+class InvalidAccessTokenError(Exception):
     pass

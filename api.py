@@ -5,8 +5,6 @@ from json import dumps
 
 import requests
 
-import exceptions
-
 __author__ = 'sami'
 
 
@@ -22,9 +20,9 @@ class PushBullet(object):
         key = os.environ.get('PUSHBULLET_API_KEY')
         if key is None:
             try:
-                s = shelve.open('access_token')
-                key = s['api_key']
-            except KeyError:
+                s = shelve.open('access_token', protocol=1)
+                key = s[str('api_key')]
+            except (KeyError, TypeError):
                 key = None
             finally:
                 s.close()
@@ -33,8 +31,8 @@ class PushBullet(object):
     @api_key.setter
     def api_key(self, value):
         os.putenv('PUSHBULLET_API_KEY', value)
-        s = shelve.open('access_token')
-        s['api_key'] = value
+        s = shelve.open('access_token', protocol=1)
+        s[str('api_key')] = value
         s.close()
 
     @property
@@ -101,7 +99,7 @@ class PushBullet(object):
                 'Access-Token': self.api_key
             })
         if request.status_code == 401:
-            raise exceptions.InvalidApiKey()
+            raise InvalidAccessTokenError()
         json = request.json()
         for device in json['devices']:
             if device['active']:
@@ -158,3 +156,7 @@ class AllDevice(object):
 
     def __str__(self):
         return '[Virtual Device] ALL'
+
+
+class InvalidAccessTokenError(Exception):
+    pass

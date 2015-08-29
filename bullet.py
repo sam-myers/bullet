@@ -4,9 +4,8 @@ from sys import argv
 
 from prompt_toolkit.shortcuts import get_input
 
-from api import PushBullet, Device, AllDevice
+from api import PushBullet, AllDevice, InvalidAccessTokenError
 from completer import CommandCompleter
-from exceptions import *
 
 __author__ = 'sami'
 
@@ -29,7 +28,7 @@ def parse(txt, device_list, command_list):
             txt = txt[len(c)+1:]
             break
     if command is None:
-        raise UnknownCommand()
+        raise UnknownCommandError()
 
     device = None
     for d in device_list:
@@ -38,7 +37,7 @@ def parse(txt, device_list, command_list):
             txt = txt[len(d.name)+1:]
             break
     if device is None:
-        raise UnknownDevice()
+        raise UnknownDeviceError()
 
     return command, device, txt
 
@@ -51,9 +50,11 @@ def prompt_for_api_key(pushbullet):
     pushbullet.api_key = key
     if pushbullet.api_key == key:
         print('Access token configured')
+        return True
     else:
         print('Unable to set your environment variable automatically.\n'
               'Please manually set the variable "PUSHBULLET_API_KEY" to the access token')
+        return False
 
 
 def main(args):
@@ -61,8 +62,9 @@ def main(args):
 
     try:
         pb.retrieve_devices()
-    except InvalidApiKey:
-        prompt_for_api_key(pb)
+    except InvalidAccessTokenError:
+        if not prompt_for_api_key(pb):
+            return False
     command_completer = CommandCompleter(pb)
 
     def loop(txt):
@@ -80,9 +82,9 @@ def main(args):
             try:
                 command, device, msg = parse(txt, pb.devices, pb.valid_commands)
                 pb.push(command, device, msg)
-            except UnknownCommand:
+            except UnknownCommandError:
                 print('Unknown command, try \'help\' for a list of valid ones')
-            except UnknownDevice:
+            except UnknownDeviceError:
                 print('Device name not recognized')
 
     if args:
@@ -94,6 +96,14 @@ def main(args):
                 loop(text)
         except KeyboardInterrupt:
             return
+
+
+class UnknownCommandError(Exception):
+    pass
+
+
+class UnknownDeviceError(Exception):
+    pass
 
 
 if __name__ == '__main__':
