@@ -3,9 +3,7 @@ __author__ = 'sami'
 from io import StringIO
 import sys
 import unittest
-from unittest.mock import MagicMock
 
-from api import PushBullet
 from bullet import main, prompt_for_api_key
 
 
