@@ -40,6 +40,11 @@ class PushBullet(object):
     def push(self, command, device, msg):
         if command == 'note':
             self.push_note(' ', msg, device)
+        elif command == 'link':
+            split_msg = msg.split(' ')
+            url = split_msg[0]
+            body = '' if len(split_msg) == 1 else ' '.join(split_msg[1:])
+            self.push_link(' ', body, url, device)
 
     def push_note(self, title, body, device):
         payload = dumps({
@@ -57,8 +62,22 @@ class PushBullet(object):
             })
         print('Pushed the note "{}" to {}'.format(body, device.name))
 
-    def push_link(self):
-        pass
+    def push_link(self, title, body, url, device):
+        payload = dumps({
+            'type': 'link',
+            'title': title,
+            'body': body,
+            'url': url,
+            'device_iden': device.id
+        })
+        requests.post(
+            'https://api.pushbullet.com/v2/pushes',
+            data=payload,
+            headers={
+                'Access-Token': self.api_key,
+                'Content-Type': 'application/json'
+            })
+        print('Pushed the url "{}" to {}'.format(url, device.name))
 
     def retrieve_devices(self):
         request = requests.get(
