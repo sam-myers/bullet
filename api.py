@@ -33,11 +33,9 @@ class PushBullet(object):
     @api_key.setter
     def api_key(self, value):
         os.putenv('PUSHBULLET_API_KEY', value)
-        key = os.environ.get('PUSHBULLET_API_KEY')
-        if value != key:
-            s = shelve.open('access_token')
-            s['api_key'] = value
-            s.close()
+        s = shelve.open('access_token')
+        s['api_key'] = value
+        s.close()
 
     @property
     def user(self):
