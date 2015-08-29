@@ -5,7 +5,7 @@ from json import dumps
 
 import requests
 
-from exceptions import InvalidApiKey
+import exceptions
 
 __author__ = 'sami'
 
@@ -103,7 +103,7 @@ class PushBullet(object):
                 'Access-Token': self.api_key
             })
         if request.status_code == 401:
-            raise InvalidApiKey()
+            raise exceptions.InvalidApiKey()
         json = request.json()
         for device in json['devices']:
             if device['active']:
