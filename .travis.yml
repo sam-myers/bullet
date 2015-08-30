@@ -11,3 +11,9 @@ script:
 env:
   matrix:
     secure: lcgjAF0kAsq1Otnay2A4106Kj2oxAvX0sjiTPLgzEtt0BOMl0OLTWv5n37vl38MNu6RDmz4GNH0LS18wXBtmC2uQ/OVl6HFZLcrltDHnqSjQZ3HeERUktIWppbqAlX+YYNuTQiMy/Qn3VRzFKwH27PFCRQ+2hVRPtBvxeqqAYcESg5ZxVy3DtN0Fgk8xYCRnY1NVwWt8c/2zesQMTswHrnzk0J44a40RdXlVYqAPnPcBm3PNPQXcmo74qThIvdwZMuBA2n8s2EQWNGljy6mpcyHLT3u1jgk3GvL3HxBPnBjXnIKTp16VG948ww2ZV7JxQyX2gWq+n5EPuEbemSf1ugLa7PRGCcWaDJ9B2izB8ly/f9ovGEGRjjupuMqVJ9ym0pXnEppW11Wo0KYw5SLmyu/ry433PdaBp4IznHqxjFEics+i9pd/fWF/cW6f0AA0SjsvUYDKZP16Vb6DBHEIXciKh2WoIIMBkXI5T++FSF4mHBWHagpobfZvZwoLLciJOKneBshgaQjRCKoHlPp4x0Zo4/4ZNjF4SLEbfeKfpjLgPFZfUWNfvE/HGSnIkbl7GbaKTFY44NF5djeCzWKaV8fAeUsPUYWzn0U/RBAduoWZ0LUghdZWt5EqOHoQYnK3kKUe3Zbatc0/grn7lE//Hxt6vGG804aWyeENo4rExrg=
+notifications:
+  email:
+    recipients:
+      - s.elahmadie@gmail.com
+    on_success: change
+    on_failure: always
