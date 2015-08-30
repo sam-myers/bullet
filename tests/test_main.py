@@ -32,6 +32,3 @@ class MainTestCase(unittest.TestCase):
         main(args)
         output = out.getvalue().strip()
         self.assertTrue('Valid commands:' in output)
-
-    def test_travis_ci_notifications(self):
-        self.assertTrue(False)
