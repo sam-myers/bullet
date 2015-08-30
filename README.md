@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Demotivated/bullet.svg?branch=master)](https://travis-ci.org/Demotivated/bullet)
+[![Build Status](https://travis-ci.org/Demotivated/bullet.svg?branch=master)](https://travis-ci.org/Demotivated/bullet) [![Coverage Status](https://coveralls.io/repos/Demotivated/bullet/badge.svg?branch=master&service=github)](https://coveralls.io/github/Demotivated/bullet?branch=master)
 
 ### About PushBullet
 
